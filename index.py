@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 app = Flask(__name__)
 
 prices = [
@@ -26,6 +26,22 @@ def info(index):
     nome=item[1],
     preco=item[2]
   )
+
+@app.route('/adicionar')
+def newProduct():
+  return render_template(
+    'cadastro.html',
+    titulo='Adicionar novo produto'
+  )
+
+@app.route('/novo', methods=['POST'])
+def add():
+  newId = len(prices)
+  nome = request.form['nome']
+  preco = float(request.form['preco'])
+
+  prices.append([newId, nome, preco])
+  return redirect('/')
 
 if __name__ == '__main__':
   app.run()

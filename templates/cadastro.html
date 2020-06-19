@@ -16,6 +16,11 @@
       min-height: 100vh;
       justify-content: space-evenly;
       align-items: center;
+      flex-direction: column;
+    }
+
+    div.row {
+      flex-direction: row;
     }
 
     table {
@@ -37,31 +42,24 @@
   </style>
 
   <script>
-    function redirect(index) {
-      window.location.replace('/info/' + index);
-    }
-
-    function redirectNew() {
-      window.location.replace('/adicionar');
+    function voltar() {
+      window.location.replace('/');
     }
   </script>
 </head>
 
 <body>
-  <div>
-    <button onclick="redirectNew()">Adicionar</button>
-    <table>
-      <tr class="tableHeader">
-        <td>Nome</td>
-        <td>Preço</td>
-      </tr>
-      {% for id, nome, preco in prices %}
-      <tr {% if preco < 5 %} class="smallPrice" {% endif %} onclick="redirect({{loop.index0}})">
-        <td>{{ nome }}</td>
-        <td>{{ preco }}</td>
-      </tr>
-      {% endfor %}
-    </table>
+  <div class="row">
+    <button onclick="voltar()">Voltar</button>
+  </div>
+  <div class="row">
+    <form action="/novo" method="post">
+      <label for="nome">Nome:</label>
+      <input id="nome" name="nome" type="text" placeholder="Nome" value="{{ nome }}" />
+      <label for="preco">Preço:</label>
+      <input id="preco" name="preco" type="number" step="0.01" min="0" placeholder="Preco" value="{{ preco }}" />
+      <input type="submit" value="Adicionar">
+    </form>
   </div>
 </body>
 
